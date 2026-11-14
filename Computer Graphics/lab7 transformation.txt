@@ -1,0 +1,114 @@
+#include <graphics.h>
+#include <stdio.h>
+#include <conio.h>
+#include <math.h>
+int main()
+{
+    int gdriver = DETECT, gm;
+    initgraph(&gdriver, &gm, "");
+    int x1 = 250, y1 = 200;
+    int x2 = 350, y2 = 350;
+    int choice;
+    int tx, ty;
+    float sx, sy;
+    int a = 300, b = 300;
+    rectangle(x1, y1, x2, y2);
+    outtextxy(100, 150, "Anushma Shakya");
+    printf("1. Translation\n");
+    printf("2. Scaling\n");
+    printf("3. Rotation\n");
+    printf("4. Shearing\n");
+    printf("5. Reflection\n");
+    printf("\nEnter your choice: ");
+    scanf("%d", &choice);
+    switch(choice)
+    {
+        case 1:
+        {
+            printf("Enter tx and ty: ");
+            scanf("%d%d", &tx, &ty);
+            setcolor(GREEN);
+            rectangle(x1 + tx, y1 + ty, x2 + tx, y2 + ty);
+            outtextxy(x1 + tx, y1 + ty - 10, "Translated");
+            break;
+        }
+        case 2:
+        {
+            printf("Enter sx and sy: ");
+            scanf("%f%f", &sx, &sy);
+            int nx1 = a + (x1 - a) * sx;
+            int ny1 = b + (y1 - b) * sy;
+            int nx2 = a + (x2 - a) * sx;
+            int ny2 = b + (y2 - b) * sy;
+            setcolor(GREEN);
+            rectangle(nx1, ny1, nx2, ny2);
+            outtextxy(nx1, ny1 - 10, "Scaled");
+            break;
+        }
+        case 3:
+        {
+            float angle, rad;
+            printf("Enter angle in degrees: ");
+            scanf("%f", &angle);
+            rad = angle * 3.14159 / 180.0;
+            int rx1 = a + (x1 - a) * cos(rad) - (y1 - b) * sin(rad);
+            int ry1 = b + (x1 - a) * sin(rad) + (y1 - b) * cos(rad);
+            int rx2 = a + (x2 - a) * cos(rad) - (y1 - b) * sin(rad);
+            int ry2 = b + (x2 - a) * sin(rad) + (y1 - b) * cos(rad);
+            int rx3 = a + (x2 - a) * cos(rad) - (y2 - b) * sin(rad);
+            int ry3 = b + (x2 - a) * sin(rad) + (y2 - b) * cos(rad);
+            int rx4 = a + (x1 - a) * cos(rad) - (y2 - b) * sin(rad);
+            int ry4 = b + (x1 - a) * sin(rad) + (y2 - b) * cos(rad);
+            setcolor(YELLOW);
+            line(rx1, ry1, rx2, ry2);
+            line(rx2, ry2, rx3, ry3);
+            line(rx3, ry3, rx4, ry4);
+            line(rx4, ry4, rx1, ry1);
+            outtextxy(rx1, ry1 - 10, "Rotated");
+            break;
+        }
+        case 4:
+        {
+            float shx, shy;
+            printf("Enter shear factors shx and shy: ");
+            scanf("%f%f", &shx, &shy);
+            int sx1 = x1 + shx * (y1 - b);
+            int sy1 = y1 + shy * (x1 - a);
+            int sx2 = x2 + shx * (y1 - b);
+            int sy2 = y1 + shy * (x2 - a);
+            int sx3 = x2 + shx * (y2 - b);
+            int sy3 = y2 + shy * (x2 - a);
+            int sx4 = x1 + shx * (y2 - b);
+            int sy4 = y2 + shy * (x1 - a);
+            setcolor(CYAN);
+            line(sx1, sy1, sx2, sy2);
+            line(sx2, sy2, sx3, sy3);
+            line(sx3, sy3, sx4, sy4);
+            line(sx4, sy4, sx1, sy1);
+            outtextxy(sx1, sy1 - 10, "Sheared");
+            break;
+        }
+        case 5:
+        {
+            int rx1 = 2 * a - x1;
+            int ry1 = y1;
+            int rx2 = 2 * a - x2;
+            int ry2 = y2;
+            if(rx1 > rx2)
+            {
+                int temp = rx1;
+                rx1 = rx2;
+                rx2 = temp;
+            }
+            setcolor(MAGENTA);
+            rectangle(rx1, ry1, rx2, ry2);
+            outtextxy(rx1, ry1 - 10, "Reflected");
+            break;
+        }
+        default:
+            printf("Invalid Choice!");
+    }
+    getch();
+    closegraph();
+    return 0;
+}

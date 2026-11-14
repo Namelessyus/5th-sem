@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+#include<graphics.h>
+void Boundary_fill(int x, int y, int b_color, int fill_color);
+
+int main()
+{
+    int gd = DETECT, gm;
+    int x, y, r;
+    initgraph(&gd, &gm, "");
+    printf("Enter the centre of the circle(x,y):");
+    scanf("%d%d", &x, &y);
+    printf("Enter the radius of the circle:");
+    scanf("%d", &r);
+    circle(x,y,r);
+    Boundary_fill(x,y,WHITE,RED);
+    outtextxy(200,60,"Anushma Shakya");
+    getch();
+    closegraph();
+    return 0;
+}
+void Boundary_fill(int x, int y, int b_color, int fill_color)
+{
+    int value = getpixel(x,y);
+    if(value != b_color && value != fill_color){
+        putpixel(x,y,fill_color);
+        Boundary_fill(x-1, y, b_color, fill_color);
+        Boundary_fill(x+1, y, b_color, fill_color);
+        Boundary_fill(x, y-1, b_color, fill_color);
+        Boundary_fill(x, y+1, b_color, fill_color);
+    }
+}
